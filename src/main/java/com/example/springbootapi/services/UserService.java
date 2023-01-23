@@ -36,7 +36,7 @@ public class UserService {
             updatedUser.setPassword(requestUser.getPassword());
             userRepository.save(updatedUser);
             return updatedUser;
-        } return null;
+        } else return null;
     }
 
     public void userDelete(Long userId) {

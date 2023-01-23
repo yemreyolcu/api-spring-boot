@@ -51,7 +51,7 @@ public class PostService {
             updatedPost.setTitle(requestPost.getTitle());
             postRepository.save(updatedPost);
             return updatedPost;
-        } return null;
+        } else return null;
     }
 
     public void postDelete(Long postId) {
