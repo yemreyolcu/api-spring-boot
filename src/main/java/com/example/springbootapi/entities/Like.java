@@ -32,4 +32,8 @@ public class Like {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
+
+
+    @Column(name= "status", columnDefinition = "boolean default false")
+    private boolean status;
 }
