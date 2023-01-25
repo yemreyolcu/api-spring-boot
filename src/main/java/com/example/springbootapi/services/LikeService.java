@@ -7,10 +7,12 @@ import com.example.springbootapi.entities.User;
 import com.example.springbootapi.repositories.LikeRepository;
 import com.example.springbootapi.requests.LikeCreateRequest;
 import com.example.springbootapi.requests.LikeUpdateRequest;
+import com.example.springbootapi.responses.LikeResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LikeService {
@@ -25,14 +27,17 @@ public class LikeService {
         this.postService = postService;
     }
 
-    public List<Like> likesList(Optional<Long> postId, Optional<Long> userId) {
+    public List<LikeResponse> likesList(Optional<Long> postId, Optional<Long> userId) {
+        List<Like> myList;
         if (postId.isPresent() && userId.isPresent())
-            return likeRepository.findByPost_IdAndUser_Id(postId.get(), userId.get());
+            myList = likeRepository.findByPost_IdAndUser_Id(postId.get(), userId.get());
         else if (postId.isPresent())
-            return likeRepository.findByPost_Id(postId.get());
+            myList = likeRepository.findByPost_Id(postId.get());
         else if (userId.isPresent())
-            return likeRepository.findByUser_Id(userId.get());
-        return likeRepository.findAll();
+            myList = likeRepository.findByUser_Id(userId.get());
+        else
+            myList = likeRepository.findAll();
+        return myList.stream().map(LikeResponse::new).collect(Collectors.toList());
     }
 
     public Like likeCreate(LikeCreateRequest likeCreateRequest) {

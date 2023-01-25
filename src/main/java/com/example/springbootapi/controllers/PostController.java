@@ -4,6 +4,7 @@ package com.example.springbootapi.controllers;
 import com.example.springbootapi.entities.Post;
 import com.example.springbootapi.requests.PostCreateRequest;
 import com.example.springbootapi.requests.PostUpdateRequest;
+import com.example.springbootapi.responses.PostResponse;
 import com.example.springbootapi.services.PostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class PostController {
     }
 
     @GetMapping("/")
-    List<Post> postListAPI(@RequestParam Optional<Long> userId) {
+    List<PostResponse> postListAPI(@RequestParam Optional<Long> userId) {
         return postService.postsList(userId);
     }
 

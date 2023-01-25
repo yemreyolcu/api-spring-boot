@@ -5,10 +5,12 @@ import com.example.springbootapi.entities.User;
 import com.example.springbootapi.repositories.PostRepository;
 import com.example.springbootapi.requests.PostCreateRequest;
 import com.example.springbootapi.requests.PostUpdateRequest;
+import com.example.springbootapi.responses.PostResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -21,10 +23,13 @@ public class PostService {
         this.userService = userService;
     }
 
-    public List<Post> postsList(Optional<Long> userId) {
+    public List<PostResponse> postsList(Optional<Long> userId) {
+        List<Post> myList;
         if (userId.isPresent())
-            return this.postRepository.findByUserId(userId.get());
-        return this.postRepository.findAll();
+            myList = this.postRepository.findByUserId(userId.get());
+        else
+            myList = this.postRepository.findAll();
+        return myList.stream().map(PostResponse::new).collect(Collectors.toList());
     }
 
     public Post postRetrieve(Long postId) {

@@ -4,6 +4,7 @@ package com.example.springbootapi.controllers;
 import com.example.springbootapi.entities.Like;
 import com.example.springbootapi.requests.LikeCreateRequest;
 import com.example.springbootapi.requests.LikeUpdateRequest;
+import com.example.springbootapi.responses.LikeResponse;
 import com.example.springbootapi.services.LikeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class LikeController {
     }
 
     @GetMapping("/")
-    public List<Like> likesListAPI(@RequestParam Optional<Long> postId, @RequestParam Optional<Long> userId) {
+    public List<LikeResponse> likesListAPI(@RequestParam Optional<Long> postId, @RequestParam Optional<Long> userId) {
         return likeService.likesList(postId, userId);
     }
 
