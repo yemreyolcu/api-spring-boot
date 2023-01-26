@@ -3,6 +3,7 @@ package com.example.springbootapi.services;
 
 import com.example.springbootapi.entities.User;
 import com.example.springbootapi.repositories.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> usersList() {
@@ -21,6 +24,7 @@ public class UserService {
     }
 
     public User userCreate(User newUser) {
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return userRepository.save(newUser);
     }
 
@@ -42,4 +46,6 @@ public class UserService {
     public void userDelete(Long userId) {
         userRepository.deleteById(userId );
     }
+
+
 }
